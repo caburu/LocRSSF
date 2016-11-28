@@ -1,0 +1,15 @@
+0	= limite inferior
+10	= limite superior
+3	= número de nohs comuns
+2	= número de nohs ancoras
+3.5 = alcance do rádio
+0   = ruído das medidas de distâncias
+1 1	= x e y dos nohs ancoras...
+5 5	= ... um noh em cada linha
+   <- As distâncias são representadas como espécies de listas de adjacências. A linha começa com o 
+      id do nó, seguido de pares id, distância. Para indicar o término usa-se o par -1, 0
+0 0 2.82 1 4 2 5.39 -1 0 = distancias dos nohs ancoras para os nohs comuns...
+1 0 2.82 1 4 2 2.24 -1 0 = .. continuação.
+0 1 2.82 2 3 -1 0      = distancias entre os nós comuns...
+1 2 2.24 -1 0          = .. 
+2 -1 0                 = .. continuação.
