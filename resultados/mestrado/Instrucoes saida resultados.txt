@@ -1,0 +1,96 @@
+//======================================================================================
+//
+// O presente arquivo explica como ler os resultados dados pelo algoritmo
+//
+// Júlio César Alves
+// Belo Horizonte, 27 de fevereiro de 2014
+//
+// julio.caburu@gmail.com
+//
+//======================================================================================
+
+EXEMPLO DE SAÍDA DO ALGORITMO
+__________
+
+Erro F(x): 6.42278e-09
+ [desvMed	3.93624e-08	desvMax	2.02678e-07	desvQuad	2.65357e-13	rmsd	5.42993e-08	par	5.69673e-12	]
+Iteração: 13, tempo: 0.86, total iteracoes: 20
+TempoTotal: 1.56
+
+INSTRUÇÕES
+__________
+
+O Erro F(x) é a função objetivo do algoritmo e, portanto, não leva em conta a solução ótima
+  Ele se baseia nas distâncias dadas como entrada para o algoritmo
+
+Os erros dados entre [] são comparações com a solução ótima
+
+===================================================
+
+desvMed = é a média das distâncias da posição de cada nó em relação a sua posição na solução ótima
+
+===================================================
+
+desvMax = a maior distância da posição de um nó em relação a sua posição na solução ótima
+
+===================================================
+
+desvQuad = é a soma das distâncias ao quadrado da posição de cada nó em relação a sua posição na solução ótima
+
+===================================================
+
+rmsd = root mean square deviation = raiz(desvQuad/nroNos)
+
+===================================================
+
+par = porcentagem de erro pelo alcance do rádio
+	erroPeloAlcanceRadio
+	para cada nó
+		erro = distancia(nó, nó na solução ótima)
+		erroPeloAlcanceRadio += (erro^2 / alcanceRadio^2);
+	par = (erroPeloAlcanceRadio/nroNohs) * 100
+
+===================================================
+
+Erro F(x) = Soma dos erros calculados para cada nó
+
+-> Ou seja, é de acordo com as distâncias dadas como entrada para o algoritmo (não é comparação com solução ótima)
+
+O erro de um determinado nó N é: 
+	a soma dos erros para cada nó alcançável
+	+ a soma das penalizações dos nós inalcançáveis que apareceram a uma distância menor que o alcance do rádio
+	E essa soma toda é dividida pelo total de nós
+	
+Em maiores detalhes:
+	
+	Obs1: DistanciaQuad é uma função que calcula a distância ao quadrado (ou seja, não tira a raiz)
+	Obs2: FatorErroNaoVizQuad = pow(alcanceRadio*(1+ruido), 2);
+	
+	// soma os erros quadrados para cada nó alcançável na rede
+	erro = 0
+	Para cada nó P alcançável a partir de N
+		erro += DistanciaQuad(N,P)
+	// soma os erros de nós que são inalcançáveis mas ficaram a uma distância menor que o alcance do rádio
+	Para cada nó P inalcançável a partir de N
+		diferenca = FatorErroNaoVizQuad - DistanciaQuad(N,P)
+		Se diferenca > 0
+			erro += diferenca
+	return erro/totalDeNohs
+	
+===================================================
+
+Iteração = em qual iteração do algoritmo foi encontrada a melhor solução
+
+===================================================
+
+tempo = tempo gasto até se encontrar a melhor solução
+
+===================================================
+
+total iteracoes = número total de iterações executadas
+
+===================================================
+
+TempoTotal = tempo total de execução do algoritmo
+
+===================================================
